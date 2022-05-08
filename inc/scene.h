@@ -8,9 +8,7 @@ namespace mt
 	{
 	public:
 		Scene(int width, int height);
-
 		~Scene();
-
 		void LifeCycle();
 
 	private:
@@ -22,5 +20,8 @@ namespace mt
 		std::unique_ptr<sf::RenderWindow> m_window;
 		std::unique_ptr<sf::Texture> m_texture;
 		std::unique_ptr<sf::Sprite> m_sprite;
+
+		Point* m_points = nullptr;
+		int m_size = 0;
 	};
 }
