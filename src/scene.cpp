@@ -14,7 +14,7 @@ namespace mt
 		m_sprite = std::make_unique<sf::Sprite>(*m_texture);
 
 		Intrinsic intrinsic = { 960.0, 540.0, 960.0, 540.0 };
-		Point position = { 467340.0, 6063520.0, -60 };
+		Point position = { 467340.0, -60, 6063520.0 };
 		Angles angles = { 0.0,1.8,0.0 };
 		m_camera = std::make_unique<Camera>(m_width, m_height, intrinsic, position, angles);
 
@@ -95,7 +95,7 @@ namespace mt
 					m_points[m_size].z = r * cos(teta);
 					m_size++;
 				}
-			*/
+			*/ô
 			m_size = 0;
 			for (int i = 0; i < n; i++)
 			{
