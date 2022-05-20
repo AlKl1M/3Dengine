@@ -197,7 +197,7 @@ namespace mt::math
 		return out;
 	}
 
-	using Vec2i = Matrix<int, 2, 1>;	//   
+	using Vec2i = Matrix<int, 2, 1>;	
 	using Vec2d = Matrix<double, 2, 1>;
 	using Mat22i = Matrix<int, 2, 2>;
 	using Mat22d = Matrix<double, 2, 2>;

@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 
+#define SIZE 400000
+
 namespace mt
 {
 	Scene::Scene(int width, int height)
@@ -18,7 +20,6 @@ namespace mt
 		Angles angles = { 0.0,1.8,0.0 };
 		m_camera = std::make_unique<Camera>(m_width, m_height, intrinsic, position, angles);
 
-		m_points = new Point[300000];
 	}
 	Scene::~Scene()
 	{
@@ -26,23 +27,27 @@ namespace mt
 			delete[] m_points;
 	}
 
-	void Scene::LifeCycle()
-	{
-
-		std::ifstream in("in.txt");
-
-		Point* points = new Point[300000];
-		Pixel* pixels = new Pixel[300000];
+	void Scene::objFromFile(std::string filename, Point* point, Pixel* pixel) {
+		std::ifstream in(filename);
 		int r, g, b;
-		int n = 0;
+		m_size = 0;
 		while (!in.eof())
 		{
-			in >> points[n].x >> points[n].y >> points[n].z >> r >> g >> b;
-			pixels[n].r = static_cast<uint8_t>(r);
-			pixels[n].g = static_cast<uint8_t>(g);
-			pixels[n].b = static_cast<uint8_t>(b);
-			n++;
+			in >> point[m_size].x >> point[m_size].y >> point[m_size].z >> r >> g >> b;
+			pixel[m_size].r = static_cast<uint8_t>(r);
+			pixel[m_size].g = static_cast<uint8_t>(g);
+			pixel[m_size].b = static_cast<uint8_t>(b);
+			m_size++;
 		}
+		in.close();
+	}
+
+	void Scene::LifeCycle()
+	{
+		m_points = new Point[400000];
+		Point* points = new Point[SIZE];
+		Pixel* pixels = new Pixel[SIZE];
+		objFromFile("in.txt", points, pixels);
 
 		while (m_window->isOpen()) {
 			sf::Event event;
@@ -95,7 +100,8 @@ namespace mt
 					m_points[m_size].z = r * cos(teta);
 					m_size++;
 				}
-			*/ô
+			*/
+			int n = m_size;
 			m_size = 0;
 			for (int i = 0; i < n; i++)
 			{
@@ -110,7 +116,6 @@ namespace mt
 
 			m_texture->update((uint8_t*)m_camera->Picture(), 1920, 1080, 0, 0);
 			m_camera->Clear();
-
 
 			m_window->clear();
 			m_window->draw(*m_sprite);

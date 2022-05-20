@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <camera.h>
+#include <string>
 
 namespace mt
 {
@@ -10,6 +11,7 @@ namespace mt
 		Scene(int width, int height);
 		~Scene();
 		void LifeCycle();
+		void objFromFile(std::string filename, Point* point, Pixel* pixel);
 
 	private:
 		std::unique_ptr<Camera> m_camera;
@@ -22,6 +24,7 @@ namespace mt
 		std::unique_ptr<sf::Sprite> m_sprite;
 
 		Point* m_points = nullptr;
+		Pixel* m_pixel = nullptr;
 		int m_size = 0;
 	};
 }
