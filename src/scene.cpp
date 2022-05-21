@@ -16,7 +16,12 @@ namespace mt
 		m_sprite = std::make_unique<sf::Sprite>(*m_texture);
 
 		Intrinsic intrinsic = { 960.0, 540.0, 960.0, 540.0 };
-		Point position = { 467340.0, -60, 6063520.0 };
+
+		// projecting points drom file
+		Point position = { 467340.0, -60.0, 6063520.0 };
+
+		//hemisphere
+		//Point position = { 0.0, 0.0, 0.0 };
 		Angles angles = { 0.0,1.8,0.0 };
 		m_camera = std::make_unique<Camera>(m_width, m_height, intrinsic, position, angles);
 
@@ -42,12 +47,33 @@ namespace mt
 		in.close();
 	}
 
+	void Scene::hemisphere(Point* point, Pixel* pixel) {
+		m_size = 0;
+		double r = 1;
+		for (double fi = 0; fi < 6.28; fi += 0.01)
+		{
+			for (double teta = 0; teta < 1.57; teta += 0.01)
+			{
+				point[m_size].x = r * sin(teta) * cos(fi);
+				point[m_size].y = r * sin(teta) * sin(fi);
+				point[m_size].z = r * cos(teta);
+				pixel[m_size].r = 255;
+				pixel[m_size].g = 0;
+				pixel[m_size].b = 0;
+				pixel[m_size].a = 255;
+				m_size++;
+			}
+		}
+		
+	}
+
 	void Scene::LifeCycle()
 	{
 		m_points = new Point[400000];
 		Point* points = new Point[SIZE];
 		Pixel* pixels = new Pixel[SIZE];
 		objFromFile("in.txt", points, pixels);
+		//hemisphere(points, pixels);
 
 		while (m_window->isOpen()) {
 			sf::Event event;
@@ -88,19 +114,6 @@ namespace mt
 				m_camera->dRoll(0.02);
 			}
 
-			/* ellipse
-			m_size = 0;
-			double r = 1;
-			m_points = new Point[200000];
-			for (double fi = 0; fi < 6.28; fi += 0.01)
-				for (double teta = 0; teta < 1.57; teta += 0.01)
-				{
-					m_points[m_size].x = r * sin(teta) * cos(fi);
-					m_points[m_size].y = r * sin(teta) * sin(fi);
-					m_points[m_size].z = r * cos(teta);
-					m_size++;
-				}
-			*/
 			int n = m_size;
 			m_size = 0;
 			for (int i = 0; i < n; i++)

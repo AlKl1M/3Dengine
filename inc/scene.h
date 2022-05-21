@@ -12,6 +12,7 @@ namespace mt
 		~Scene();
 		void LifeCycle();
 		void objFromFile(std::string filename, Point* point, Pixel* pixel);
+		void hemisphere(Point* point, Pixel* pixel);
 
 	private:
 		std::unique_ptr<Camera> m_camera;
