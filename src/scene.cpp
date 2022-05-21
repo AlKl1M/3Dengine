@@ -20,7 +20,7 @@ namespace mt
 		// projecting points drom file
 		Point position = { 467340.0, -60.0, 6063520.0 };
 
-		//hemisphere
+		// semicircle
 		//Point position = { 0.0, 0.0, 0.0 };
 		Angles angles = { 0.0,1.8,0.0 };
 		m_camera = std::make_unique<Camera>(m_width, m_height, intrinsic, position, angles);
